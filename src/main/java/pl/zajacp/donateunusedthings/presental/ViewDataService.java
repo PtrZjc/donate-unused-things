@@ -1,6 +1,8 @@
 package pl.zajacp.donateunusedthings.presental;
 
 import org.springframework.stereotype.Service;
+import pl.zajacp.donateunusedthings.model.Donation;
+import pl.zajacp.donateunusedthings.model.DonationRepository;
 import pl.zajacp.donateunusedthings.model.Institution;
 import pl.zajacp.donateunusedthings.model.InstitutionRepository;
 
@@ -12,9 +14,11 @@ import java.util.Map;
 @Service
 public class ViewDataService {
     private final InstitutionRepository institutionRepository;
+    private final DonationRepository donationRepository;
 
-    public ViewDataService(InstitutionRepository institutionRepository) {
+    public ViewDataService(InstitutionRepository institutionRepository, DonationRepository donationRepository) {
         this.institutionRepository = institutionRepository;
+        this.donationRepository = donationRepository;
     }
 
     List<InstitutionViewRow> getRowSortedCharities() {
@@ -30,5 +34,18 @@ public class ViewDataService {
             listRows.add(row);
         }
         return listRows;
+    }
+
+    Long getCollectedBagsNumber(){
+        return donationRepository.findAll().stream()
+                .map(Donation::getQuantity)
+                .reduce(0L, Long::sum);
+    }
+
+    Long getHelpedCharitiesNumber(){
+        return donationRepository.findAll().stream()
+                .map(Donation::getInstitution)
+                .distinct()
+                .count();
     }
 }
