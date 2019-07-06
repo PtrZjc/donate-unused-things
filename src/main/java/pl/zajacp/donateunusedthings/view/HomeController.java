@@ -1,8 +1,9 @@
-package pl.zajacp.donateunusedthings.presental;
+package pl.zajacp.donateunusedthings.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import pl.zajacp.donateunusedthings.charity.Donation;
 
 import java.util.List;
 
@@ -18,8 +19,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String mainPage(Model model) {
-        List<InstitutionViewRow> rowSortedCharities = viewDataService.getRowSortedCharities();
-        model.addAttribute("rowSortedCharities", rowSortedCharities);
+        model.addAttribute("rowSortedCharities", viewDataService.getRowSortedCharities());
         model.addAttribute("collectedBagsNumber", viewDataService.getCollectedBagsNumber());
         model.addAttribute("helpedCharitiesNumber", viewDataService.getHelpedCharitiesNumber());
         return "index";
@@ -41,7 +41,10 @@ public class HomeController {
     }
 
     @GetMapping("/form")
-    public String formPage() {
+    public String formPage(Model model, Donation donation) {
+        model.addAttribute("charities", viewDataService.getCharities());
+        model.addAttribute("categories",viewDataService.getCategories());
+        model.addAttribute("donation", new Donation());
         return "form";
     }
 

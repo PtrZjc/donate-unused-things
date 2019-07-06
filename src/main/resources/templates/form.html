@@ -4,8 +4,15 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Document</title>
+    <title>Drocument</title>
     <link rel="stylesheet" th:href="@{css/style.css}"/>
+    <script th:src="@{js/app.js}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector('input[name="institution"]').checked = true;
+            console.log("dzialam");
+        });
+    </script>
 </head>
 <body>
 <header class="header--form-page">
@@ -63,60 +70,23 @@
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/4</div>
 
-        <form action="form-confirmation.html" method="post">
+        <form action="/form" th:object="${donation}" method="post">
+
+<!--            <input type="hidden" th:field="*{id}">-->
+
+
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
 
-                <div class="form-group form-group--checkbox">
+                <div th:each="category: ${categories}" class="form-group form-group--checkbox">
                     <label>
-                        <input
-                                type="checkbox"
-                                name="categories"
-                                value="clothes-to-use"
-                        />
+                        <input type="checkbox" th:field="*{categories}" th:value="${category.id}"/>
                         <span class="checkbox"></span>
-                        <span class="description"
-                        >ubrania, które nadają się do ponownego użycia</span
-                        >
+                        <span th:text="${category.name}" class="description">ubrania, które nadają się do ponownego użycia</span>
                     </label>
                 </div>
-
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input
-                                type="checkbox"
-                                name="categories"
-                                value="clothes-useless"
-                        />
-                        <span class="checkbox"></span>
-                        <span class="description">ubrania, do wyrzucenia</span>
-                    </label>
-                </div>
-
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input type="checkbox" name="categories" value="toys"/>
-                        <span class="checkbox"></span>
-                        <span class="description">zabawki</span>
-                    </label>
-                </div>
-
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input type="checkbox" name="categories" value="books"/>
-                        <span class="checkbox"></span>
-                        <span class="description">książki</span>
-                    </label>
-                </div>
-
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input type="checkbox" name="categories" value="other"/>
-                        <span class="checkbox"></span>
-                        <span class="description">inne</span>
-                    </label>
-                </div>
+                <p th:each="error: ${#fields.errors('categories')}" class="alert alert-danger" th:text="${error}"></p>
 
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn next-step">Dalej</button>
@@ -130,9 +100,11 @@
                 <div class="form-group form-group--inline">
                     <label>
                         Liczba 60l worków:
-                        <input type="number" name="bags" step="1" min="1"/>
+                        <input type="number" th:field="*{quantity}" name="quantity" step="1" min="1" max="100"/>
                     </label>
                 </div>
+
+                <p th:each="error: ${#fields.errors('quantity')}" class="alert alert-danger" th:text="${error}"></p>
 
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step">Wstecz</button>
@@ -145,31 +117,14 @@
             <div data-step="3">
                 <h3>Wybierz organizacje, której chcesz pomóc:</h3>
 
-                <div class="form-group form-group--checkbox">
+                <div th:each="charity: ${charities}" class="form-group form-group--checkbox">
                     <label>
-                        <input type="radio" name="organization" value="old"/>
+                        <input type="radio" th:field="*{institution}" name="institution" th:value="${charity.id}"/>
                         <span class="checkbox radio"></span>
                         <span class="description">
-                  <div class="title">Fundacja “Bez domu”</div>
-                  <div class="subtitle">
-                    Cel i misja: Pomoc dla osób nie posiadających miejsca
-                    zamieszkania
-                  </div>
-                </span>
-                    </label>
-                </div>
-
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input type="radio" name="organization" value="old"/>
-                        <span class="checkbox radio"></span>
-                        <span class="description">
-                  <div class="title">Fundacja “Dla dzieci"</div>
-                  <div class="subtitle">
-                    Cel i misja: Pomoc osobom znajdującym się w trudnej sytuacji
-                    życiowej.
-                  </div>
-                </span>
+                  <div th:text="'Fundacja &quot' + ${charity.name} + '&quot'" class="title"></div>
+                  <div th:text="'Cel i misja: ' + ${charity.description}" class="subtitle"></div>
+                       </span>
                     </label>
                 </div>
 
@@ -187,22 +142,22 @@
                     <div class="form-section--column">
                         <h4>Adres odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Ulica <input type="text" name="address"/> </label>
+                            <label> Ulica <input type="text" th:field="*{street}" name="street"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Miasto <input type="text" name="city"/> </label>
+                            <label> Miasto <input type="text" th:field="*{city}" name="city"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Kod pocztowy <input type="text" name="postcode"/>
+                                Kod pocztowy <input type="text" th:field="*{zipCode}" name="zipCode"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Numer telefonu <input type="phone" name="phone"/>
+                                Numer telefonu <input type="phone" th:field="*{phone}" name="phone"/>
                             </label>
                         </div>
                     </div>
@@ -210,17 +165,17 @@
                     <div class="form-section--column">
                         <h4>Termin odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Data <input type="date" name="data"/> </label>
+                            <label> Data <input type="date" th:field="*{pickUpDate}" name="data"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Godzina <input type="time" name="time"/> </label>
+                            <label> Godzina <input type="time" th:field="*{pickUpTime}" name="time"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
                                 Uwagi dla kuriera
-                                <textarea name="more_info" rows="5"></textarea>
+                                <textarea th:field="*{pickUpComment}" name="pickUpComment" rows="5"></textarea>
                             </label>
                         </div>
                     </div>
@@ -259,19 +214,19 @@
                         <div class="form-section--column">
                             <h4>Adres odbioru:</h4>
                             <ul>
-                                <li>Prosta 51</li>
-                                <li>Warszawa</li>
-                                <li>99-098</li>
-                                <li>123 456 789</li>
+                                <li id="formInputStreet">Prosta 51</li>
+                                <li id="formInputCity">Warszawa</li>
+                                <li id="formInputZipCode">99-098</li>
+                                <li id="formInputPhone">123 456 789</li>
                             </ul>
                         </div>
 
                         <div class="form-section--column">
                             <h4>Termin odbioru:</h4>
                             <ul>
-                                <li>13/12/2018</li>
-                                <li>15:40</li>
-                                <li>Brak uwag</li>
+                                <li id="formInputDate">13/12/2018</li>
+                                <li id="formInputHour">15:40</li>
+                                <li id="formInputNotes">Brak uwag</li>
                             </ul>
                         </div>
                     </div>
@@ -288,6 +243,6 @@
 
 <div th:replace="fragments/headerFooter:: footer"/>
 
-<script th:src="@{js/app.js}"></script>
+
 </body>
 </html>

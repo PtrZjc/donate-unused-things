@@ -1,12 +1,9 @@
-package pl.zajacp.donateunusedthings.model;
+package pl.zajacp.donateunusedthings.charity;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @Data

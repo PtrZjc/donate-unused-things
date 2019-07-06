@@ -1,14 +1,9 @@
-package pl.zajacp.donateunusedthings.model;
+package pl.zajacp.donateunusedthings.charity;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import java.math.BigDecimal;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -22,6 +17,8 @@ public class Donation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Min(1)
+    @Max(100)
     @NotNull
     private Long quantity;
 
@@ -40,6 +37,9 @@ public class Donation {
 
     @NotNull
     private LocalTime pickUpTime;
+
+    @NotNull
+    private String phone;
 
     private String pickUpComment;
 

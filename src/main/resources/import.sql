@@ -4,3 +4,10 @@ VALUES ('Dbam o Zdrowie', 'Pomoc dzieciom z ubogich rodzin.'),
        ('Dla dzieci', 'Pomoc osobom znajdującym się w trudnej sytuacji życiowej.'),
        ('Bez domu', 'Pomoc dla osób nie posiadających miejsca zamieszkania.'),
        ('Ich dom', 'Wsparcie dla dzieci opuszczających dom dziecka.');
+
+INSERT INTO categories (name)
+VALUES ('ubrania, które nadają się do ponownego użycia'),
+       ('ubrania, do wyrzucenia'),
+       ('zabawki'),
+       ('książki'),
+       ('inne');

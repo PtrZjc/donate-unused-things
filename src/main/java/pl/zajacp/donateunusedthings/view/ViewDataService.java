@@ -1,24 +1,21 @@
-package pl.zajacp.donateunusedthings.presental;
+package pl.zajacp.donateunusedthings.view;
 
 import org.springframework.stereotype.Service;
-import pl.zajacp.donateunusedthings.model.Donation;
-import pl.zajacp.donateunusedthings.model.DonationRepository;
-import pl.zajacp.donateunusedthings.model.Institution;
-import pl.zajacp.donateunusedthings.model.InstitutionRepository;
+import pl.zajacp.donateunusedthings.charity.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ViewDataService {
     private final InstitutionRepository institutionRepository;
     private final DonationRepository donationRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ViewDataService(InstitutionRepository institutionRepository, DonationRepository donationRepository) {
+    public ViewDataService(InstitutionRepository institutionRepository, DonationRepository donationRepository, CategoryRepository categoryRepository) {
         this.institutionRepository = institutionRepository;
         this.donationRepository = donationRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     List<InstitutionViewRow> getRowSortedCharities() {
@@ -47,5 +44,13 @@ public class ViewDataService {
                 .map(Donation::getInstitution)
                 .distinct()
                 .count();
+    }
+
+    List<Institution> getCharities(){
+        return institutionRepository.findAllByOrderByNameAsc();
+    }
+
+    List<Category> getCategories(){
+        return categoryRepository.findAll();
     }
 }

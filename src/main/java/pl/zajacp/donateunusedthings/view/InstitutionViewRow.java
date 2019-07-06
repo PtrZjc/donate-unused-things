@@ -1,7 +1,7 @@
-package pl.zajacp.donateunusedthings.presental;
+package pl.zajacp.donateunusedthings.view;
 
 import lombok.Data;
-import pl.zajacp.donateunusedthings.model.Institution;
+import pl.zajacp.donateunusedthings.charity.Institution;
 
 @Data
 class InstitutionViewRow {
