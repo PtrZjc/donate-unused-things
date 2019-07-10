@@ -1,6 +1,7 @@
 package pl.zajacp.donateunusedthings.charity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -33,6 +34,7 @@ public class Donation {
 
     @Future
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate pickUpDate;
 
     @NotNull
@@ -43,9 +45,11 @@ public class Donation {
 
     private String pickUpComment;
 
+    @NotNull
     @ManyToMany(mappedBy = "donations", cascade = CascadeType.ALL)
     private List<Category> categories;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "donations")
     private Institution institution;
