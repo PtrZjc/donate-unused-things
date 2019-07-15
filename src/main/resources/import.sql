@@ -6,8 +6,8 @@ VALUES ('Dbam o Zdrowie', 'Pomoc dzieciom z ubogich rodzin.'),
        ('Ich dom', 'Wsparcie dla dzieci opuszczających dom dziecka.');
 
 INSERT INTO categories (name)
-VALUES ('ubrania, które nadają się do ponownego użycia'),
-       ('ubrania, do wyrzucenia'),
+VALUES ('ubrania w dobrym stanie'),
+       ('ubrania do utylizacji'),
        ('zabawki'),
        ('książki'),
        ('inne');

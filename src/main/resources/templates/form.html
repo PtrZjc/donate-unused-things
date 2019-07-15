@@ -10,6 +10,39 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelector('input[name="institution"]').checked = true;
+
+            document.querySelector('#lastBtn').addEventListener("click", function () {
+                var categories = document.querySelectorAll('[name="categories"]');
+                var names = "";
+                for (var i = 0; i < categories.length; i++) {
+                    if (categories[i].checked) {
+                        names += ", " + categories[i].nextElementSibling.nextElementSibling.innerText
+                    }
+                }
+                var quantity = document.querySelector('#quantity').value
+                var quotient = (quantity - quantity % 10) / 10;
+                var wordTest = quantity % 10 <= 4 && quotient <= 1;
+
+                var institution = "";
+                var institutions = document.querySelectorAll('input[name="institution"]');
+                for (var i = 0; i < institutions.length; i++) {
+                    if (institutions[i].checked){
+                        institution = institutions[i].nextElementSibling.nextElementSibling.children[0].innerText
+                    }
+                }
+
+                document.querySelector('#showInputInstitution').innerText = "Dla fundacji " +  institution.substring(institution.search("\"")-1);
+                document.querySelector('#showInputQuantity').innerText = quantity;
+                document.querySelector('#bags').innerText = wordTest ? "worki zawierające" : "worków zawierających";
+                document.querySelector('#showInputCategories').innerText = names.substring(1);
+                document.querySelector('#showInputStreet').innerText = document.querySelector('#street').value
+                document.querySelector('#showInputCity').innerText = document.querySelector('#city').value
+                document.querySelector('#showInputZipCode').innerText = document.querySelector('#zipCode').value
+                document.querySelector('#showInputPhone').innerText = document.querySelector('#phone').value
+                document.querySelector('#showInputDate').innerText = document.querySelector('#pickUpDate').value
+                document.querySelector('#showInputHour').innerText = document.querySelector('#pickUpTime').value
+                document.querySelector('#showInputNotes').innerText = document.querySelector('#pickUpComment').value
+            })
         });
     </script>
 </head>
@@ -21,7 +54,7 @@
     <div class="slogan container container--90">
         <div class="slogan--item">
             <h1>
-                Oddaj rzeczy, których już nie chcesz<br/>
+                Oddaj rzecKzy, których już nie chcesz<br/>
                 <span class="uppercase">potrzebującym</span>
             </h1>
 
@@ -143,7 +176,8 @@
                     <div class="form-section--column">
                         <h4>Adres odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Ulica <input type="text" th:field="*{street}" name="street"/> </label>
+                            <label> Ulica <input type="text" th:field="*{street}" name="street"/>
+                            </label>
                         </div>
 
                         <div class="form-group form-group--inline">
@@ -158,7 +192,7 @@
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Numer telefonu <input type="phone" th:field="*{phone}" name="phone"/>
+                                Numer telefonu <input type="text" th:field="*{phone}" name="phone"/>
                             </label>
                         </div>
                     </div>
@@ -166,11 +200,13 @@
                     <div class="form-section--column">
                         <h4>Termin odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Data <input type="date" th:field="*{pickUpDate}" name="data"/> </label>
+                            <label> Data <input type="date" th:field="*{pickUpDate}" name="data"/>
+                            </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Godzina <input type="time" th:field="*{pickUpTime}" name="time"/> </label>
+                            <label> Godzina <input type="time" th:field="*{pickUpTime}" name="time"/>
+                            </label>
                         </div>
 
                         <div class="form-group form-group--inline">
@@ -190,7 +226,7 @@
 
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step">Wstecz</button>
-                    <button type="button" class="btn next-step">Dalej</button>
+                    <button type="button" class="btn next-step" id="lastBtn">Dalej</button>
                 </div>
             </div>
 
@@ -204,16 +240,13 @@
                         <ul>
                             <li>
                                 <span class="icon icon-bag"></span>
-                                <span class="summary--text"
-                                >4 worki ubrań w dobrym stanie dla dzieci</span
-                                >
+                                <span class="summary--text"><span id="showInputQuantity"></span>
+                                    <span id="bags"></span><span id="showInputCategories"></span></span>
                             </li>
 
                             <li>
                                 <span class="icon icon-hand"></span>
-                                <span class="summary--text"
-                                >Dla fundacji "Mam marzenie" w Warszawie</span
-                                >
+                                <span class="summary--text"><span id="showInputInstitution"></span></span>
                             </li>
                         </ul>
                     </div>
@@ -222,19 +255,19 @@
                         <div class="form-section--column">
                             <h4>Adres odbioru:</h4>
                             <ul>
-                                <li id="formInputStreet">Prosta 51</li>
-                                <li id="formInputCity">Warszawa</li>
-                                <li id="formInputZipCode">99-098</li>
-                                <li id="formInputPhone">123 456 789</li>
+                                <li id="showInputStreet"></li>
+                                <li id="showInputCity"</li>
+                                <li id="showInputZipCode"></li>
+                                <li id="showInputPhone"></li>
                             </ul>
                         </div>
 
                         <div class="form-section--column">
                             <h4>Termin odbioru:</h4>
                             <ul>
-                                <li id="formInputDate">13/12/2018</li>
-                                <li id="formInputHour">15:40</li>
-                                <li id="formInputNotes">Brak uwag</li>
+                                <li id="showInputDate"></li>
+                                <li id="showInputHour"></li>
+                                <li id="showInputNotes"></li>
                             </ul>
                         </div>
                     </div>
