@@ -24,24 +24,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login)
+    public UserDetails loadUserByUsername(String email)
       throws UsernameNotFoundException {
   
-        User user = userRepository.findByLogin(login);
+        User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException(
-              "Login does not exists");
+              "Email does not exists");
         }
-
-//        //TBD when extending login capability
-//        boolean enabled = true;
-//        boolean accountNonExpired = true;
-//        boolean credentialsNonExpired = true;
-//        boolean accountNonLocked = true;
 
         List<String> role = new ArrayList<>();
         role.add("ROLE_USER");
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), getAuthorities(role));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(role));
     }
      
     private static List<GrantedAuthority> getAuthorities (List<String> roles) {

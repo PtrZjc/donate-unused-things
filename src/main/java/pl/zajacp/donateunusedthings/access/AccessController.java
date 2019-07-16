@@ -13,28 +13,32 @@ import org.springframework.web.context.request.WebRequest;
 import pl.zajacp.donateunusedthings.user.UserDto;
 import pl.zajacp.donateunusedthings.user.UserService;
 import pl.zajacp.donateunusedthings.user.validation.EmailExistsException;
-import pl.zajacp.donateunusedthings.user.validation.LoginExistsException;
 
 import javax.validation.Valid;
 
 @Controller
-public class RegistrationController {
+public class AccessController {
 
     UserService userService;
 
     @Autowired
-    public RegistrationController(UserService userService) {
+    public AccessController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/registration")
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/register")
     public String showRegistrationForm(WebRequest request, Model model) {
         UserDto userDto = new UserDto();
         model.addAttribute("user", userDto);
-        return "registration";
+        return "register";
     }
 
-    @PostMapping("/registration")
+    @PostMapping("/register")
     public String registerUserAccount
             (@ModelAttribute("user") @Valid UserDto userDto,
              BindingResult result, Model model) {
@@ -42,8 +46,6 @@ public class RegistrationController {
         if (!result.hasErrors()) {
             try {
                 userService.registerNewUserAccount(userDto);
-            } catch (LoginExistsException e) {
-                result.rejectValue("login", "error.loginExists");
             } catch (EmailExistsException e) {
                 result.rejectValue("email", "error.emailExists");
             }

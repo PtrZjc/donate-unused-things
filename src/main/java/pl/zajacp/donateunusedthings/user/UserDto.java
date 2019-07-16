@@ -18,11 +18,6 @@ public class UserDto {
     private String name;
 
     @NotNull
-    @Size(min=3, max=15)
-    @Pattern(regexp="[a-zA-Z0-9\\-\\_]+")
-    private String login;
-
-    @NotNull
     @Size(min=3)
     private String password;
     private String matchingPassword;

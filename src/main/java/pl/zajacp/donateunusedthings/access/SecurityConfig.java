@@ -8,8 +8,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import pl.zajacp.donateunusedthings.user.UserDetailsServiceImpl;
 
 @Configuration
@@ -30,13 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/steps", "/about-us", "/help", "/contact",
-                        "/form", "/css/*", "/js/*", "/images/*").permitAll()
+                        "/form", "/register","/css/*", "/js/*", "/images/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().permitAll()
                 .loginPage("/login")
                 .defaultSuccessUrl("/", true)
-                .failureUrl("/login?error")
+                .failureUrl("/login-error")
                 .and()
                 .logout()
                 .deleteCookies("JSESSIONID")
@@ -48,13 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .and()
-                .inMemoryAuthentication()
-                .withUser("qwe").password(passwordEncoder().encode("qwe")).roles("USER");
+        auth.userDetailsService(userDetailsService);
     }
 
     @Bean

@@ -80,4 +80,5 @@ public class HomeController {
     public List<Category> getCategories() {
         return viewDataService.getCategories();
     }
+
 }
