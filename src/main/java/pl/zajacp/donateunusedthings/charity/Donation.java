@@ -2,6 +2,7 @@ package pl.zajacp.donateunusedthings.charity;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import pl.zajacp.donateunusedthings.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -51,6 +52,11 @@ public class Donation {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "donations")
+    @JoinColumn(name = "institution_id")
     private Institution institution;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }
