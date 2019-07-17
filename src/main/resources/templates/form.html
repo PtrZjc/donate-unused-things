@@ -16,10 +16,10 @@
                 var names = "";
                 for (var i = 0; i < categories.length; i++) {
                     if (categories[i].checked) {
-                        names += ", " + categories[i].nextElementSibling.nextElementSibling.innerText
+                        names += ", " + categories[i].nextElementSibling.nextElementSibling.innerText;
                     }
                 }
-                var quantity = document.querySelector('#quantity').value
+                var quantity = document.querySelector('#quantity').value;
                 var quotient = (quantity - quantity % 10) / 10;
                 var wordTest = quantity % 10 <= 4 && quotient <= 1;
 
@@ -35,13 +35,13 @@
                 document.querySelector('#showInputQuantity').innerText = quantity;
                 document.querySelector('#bags').innerText = wordTest ? "worki zawierające" : "worków zawierających";
                 document.querySelector('#showInputCategories').innerText = names.substring(1);
-                document.querySelector('#showInputStreet').innerText = document.querySelector('#street').value
-                document.querySelector('#showInputCity').innerText = document.querySelector('#city').value
-                document.querySelector('#showInputZipCode').innerText = document.querySelector('#zipCode').value
-                document.querySelector('#showInputPhone').innerText = document.querySelector('#phone').value
-                document.querySelector('#showInputDate').innerText = document.querySelector('#pickUpDate').value
-                document.querySelector('#showInputHour').innerText = document.querySelector('#pickUpTime').value
-                document.querySelector('#showInputNotes').innerText = document.querySelector('#pickUpComment').value
+                document.querySelector('#showInputStreet').innerText = document.querySelector('#street').value;
+                document.querySelector('#showInputCity').innerText = document.querySelector('#city').value;
+                document.querySelector('#showInputZipCode').innerText = document.querySelector('#zipCode').value;
+                document.querySelector('#showInputPhone').innerText = document.querySelector('#phone').value;
+                document.querySelector('#showInputDate').innerText = document.querySelector('#pickUpDate').value;
+                document.querySelector('#showInputHour').innerText = document.querySelector('#pickUpTime').value;
+                document.querySelector('#showInputNotes').innerText = document.querySelector('#pickUpComment').value;
             })
         });
     </script>
@@ -80,11 +80,11 @@
 </header>
 
 <div sec:authorize="isAnonymous()" th:remove="tag">
-    <h3>Uwaga!</h3>
-    <p data-step="1" class="active">
-Założenie konta jest obowiązkowe, aby zamówić kuriera.
-    </p>
-
+    <h2></p>Uwaga!</p>
+        <small></p>Zalogowanie jest obowiązkowe, aby zamówić kuriera.</p></small>
+    </h2>
+    <div class="help--slides active">
+        <p><a th:href="@{/login}" class="btn btn--large">Zaloguj</a></p></div>
 </div>
 <div sec:authorize="isAuthenticated()" th:remove="tag">
 
@@ -112,7 +112,7 @@ Założenie konta jest obowiązkowe, aby zamówić kuriera.
             <div class="form--steps-counter">Krok <span>1</span>/4</div>
 
             <form th:action="@{/form}" th:object="${donation}" method="post">
-
+                <input type="hidden" name="username" id="username" th:value="${#authentication.getPrincipal().getUsername()}"/>
                 <input type="hidden" th:field="*{id}">
 
                 <!-- STEP 1: class .active is switching steps -->

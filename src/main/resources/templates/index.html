@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -66,8 +67,7 @@
             <p>kurier przyjedzie w dogodnym terminie</p>
         </div>
     </div>
-
-    <a th:href="@{#}" class="btn btn--large">Załóż konto</a>
+    <a th:href="@{/register}" class="btn btn--large">Załóż konto</a>
 </section>
 
 <section id="about-us" class="about-us">

@@ -12,7 +12,7 @@
             <li><a th:href="@{/form}" class="btn btn--without-border">Przekaż dary</a></li>
             <li><a th:href="@{/contact}" class="btn btn--without-border">Kontakt</a></li>
             <li sec:authorize="isAnonymous()"><a th:href="@{/login}" class="btn btn--without-border">Zaloguj</a></li>
-            <li sec:authorize="isAuthenticated()"><a th:href="@{/panel}" class="btn btn--without-border">Panel użytkownika</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="#" class="btn btn--without-border">Panel użytkownika</a></li>
         </ul>
     </nav>
 </div>
@@ -41,7 +41,7 @@
             </form>
         </div>
         <div class="bottom-line">
-            <span class="bottom-line--copy">Copyright &copy; 2018</span>
+            <span class="bottom-line--copy">Copyright &copy; 2019</span>
             <div class="bottom-line--icons">
                 <a th:href="@{#}" class="btn btn--small">
                     <img th:src="@{images/icon-facebook.svg}"/>

@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().permitAll()
                 .loginPage("/login")
                 .defaultSuccessUrl("/", true)
-                .failureUrl("/login-error")
+                .failureUrl("/login?error")
                 .and()
                 .logout()
                 .deleteCookies("JSESSIONID")
@@ -48,7 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/accessDenied")
                 .and()
                 .authenticationProvider(authProvider());
-
     }
 
     @Override
@@ -67,5 +66,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(){
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(User
+                .withUsername("qwe@qw.ee")
+                .password("qwe")
+                .roles("USER")
+                .build());
+
+        return manager;
     }
 }
