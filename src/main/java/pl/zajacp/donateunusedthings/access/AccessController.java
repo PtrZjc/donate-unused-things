@@ -1,8 +1,6 @@
 package pl.zajacp.donateunusedthings.access;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,21 +56,5 @@ public class AccessController {
         }
         model.addAttribute("registered", true);
         return "login";
-    }
-
-    @GetMapping("/logged")
-    public String loggedInfo() {
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof UserDetails) {
-            String username = ((UserDetails) principal).getUsername();
-        } else {
-            String username = principal.toString();
-        }
-
-        System.out.println(principal);
-
-        return "index";
     }
 }
