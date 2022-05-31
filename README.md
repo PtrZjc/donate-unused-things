@@ -13,7 +13,7 @@ The access to form form is available upon login to the page.
 The following technologies were: 
 - Java 8
 - Spring Framework:  
-  - Spring MVC  
+  - Spring MVC 
   - Spring Boot  
   - Spring Security
   - Spring Data  
